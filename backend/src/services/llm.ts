@@ -1,5 +1,5 @@
 import { GoogleGenAI } from "@google/genai";
-import { Message } from '../generated/prisma/client/index.js'
+import { type Message } from '../generated/prisma/client/index.js'
 
 const ai =  new GoogleGenAI({});
 
@@ -10,7 +10,7 @@ FAQ Knowledge:
 - Return/refund policy: Returns are accepted within 30 days of purchase for a full refund.
 - Support hours: Monday to Friday, 9 AM to 5 PM EST.`;
 
-export async function generateReply(history: Message[],userMessage:string):Promis<string>{
+export async function generateReply(history: Message[],userMessage:string):Promise<string>{
 
         const contents = history.map((msg)=>({
             role: msg.sender === 'user' ? 'user' : 'model',
