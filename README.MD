@@ -49,16 +49,16 @@ npm run dev # Start Vite on port 5173
  
 The backend follows a standard controller-service-data layered architecture to keep concerns strictly separated:
 
-1.routes/chat.ts: The controller layer. It parses requests, orchestrates services, and handles HTTP responses.
-2.services/conversation.ts: The database access layer, encapsulating all Prisma calls so business logic doesn't leak SQL/ORM syntax.
-3.services/llm.ts: The AI integration layer. Separating this ensures we can easily swap providers (e.g., Anthropic, OpenAI) without touching the route logic.
-4.db/client.ts: A robust Prisma singleton setup using @prisma/adapter-pg and the pg driver, configured for pure ESM.
+1. routes/chat.ts: The controller layer. It parses requests, orchestrates services, and handles HTTP responses.
+2. services/conversation.ts: The database access layer, encapsulating all Prisma calls so business logic doesn't leak SQL/ORM syntax.
+3. services/llm.ts: The AI integration layer. Separating this ensures we can easily swap providers (e.g., Anthropic, OpenAI) without touching the route logic.
+4. db/client.ts: A robust Prisma singleton setup using @prisma/adapter-pg and the pg driver, configured for pure ESM.
 
 ### Interesting Design Decisions
 
-1.Database Schema: Chose a robust 2-table schema (Conversation and Message). Adding a Sender enum directly in PostgreSQL ensures strict data integrity.
+1. Database Schema: Chose a robust 2-table schema (Conversation and Message). Adding a Sender enum directly in PostgreSQL ensures strict data integrity.
 
-2.Session ID Handling: Used localStorage for anonymous session tracking. This mimics how a real widget would identify returning, unauthenticated visitors without needing a full JWT auth system.
+2. Session ID Handling: Used localStorage for anonymous session tracking. This mimics how a real widget would identify returning, unauthenticated visitors without needing a full JWT auth system.
 
 ### 🤖 LLM Notes
 
