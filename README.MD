@@ -67,11 +67,11 @@ The backend follows a standard controller-service-data layered architecture to k
 ● Prompting Strategy: Implemented a SYSTEM_INSTRUCTION that gives the model a strict persona ("Spur Store support agent") and injects domain-specific FAQs directly into its context window. Every request passes the entire formatted conversation history to maintain contextual memory.
 
 
-### ⏳ Trade-offs & "If I had more time..."
+### ⏳ Trade-offs 
 
 Due to the weekend time-box, a few trade-offs were made:
 
-1. No Rate Limiting: I would add express-rate-limit combined with a Redis store to prevent abuse of the LLM endpoint.
+1. No Rate Limiting: No rate limiting — would add express-rate-limit (in-memory for this scope; Redis-backed if scaling across multiple instances) to protect the LLM endpoint from abuse.
 
 2. Hardcoded FAQ: The FAQ knowledge is hardcoded into the system prompt. In a production environment, I would move this to a Vector Database (like pgvector) to do Retrieval-Augmented Generation (RAG) so the store owner could dynamically update their knowledge base without code changes.
 
