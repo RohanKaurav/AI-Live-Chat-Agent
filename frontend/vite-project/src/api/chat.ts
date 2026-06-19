@@ -14,3 +14,12 @@ export async function sendMessage(message:string, sessionId?:string){
         }
 }
 
+export async function getHistory(sessionId: string) {
+    try {
+        const response = await axios.get(`${API_URL}/chat/history/${sessionId}`);
+        return response.data.history;
+    } catch (error) {
+        console.error("Error fetching history", error);
+        return [];
+    }
+}

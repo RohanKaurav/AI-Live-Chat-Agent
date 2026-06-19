@@ -1,7 +1,7 @@
 
 import { useState, useRef, useEffect,type FormEvent } from 'react';
 import { Send } from 'lucide-react';
-import { sendMessage } from './api/chat';
+import { sendMessage ,getHistory} from './api/chat';
 import './App.css'; 
 
 interface Message {
@@ -26,6 +26,28 @@ function App() {
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   };
+
+useEffect(() => {
+  async function loadHistory() {
+    if (sessionId) {
+      setIsLoading(true);
+      const pastMessages = await getHistory(sessionId);
+      
+      if (pastMessages && pastMessages.length > 0) {
+        const formattedMessages = pastMessages.map((msg: any) => ({
+          id: msg.id,
+          sender: msg.sender,
+          text: msg.text,
+        }));
+        setMessages(formattedMessages);
+      }
+      setIsLoading(false);
+    }
+  }
+  
+  loadHistory();
+}, []); 
+
 
   useEffect(() => {
     scrollToBottom();
@@ -84,7 +106,7 @@ function App() {
       <div className="chat-messages">
         {messages.map((msg) => (
           <div key={msg.id} className={`message ${msg.sender}`}>
-            {msg.text}
+            {msg.text}  
           </div>
         ))}
         
