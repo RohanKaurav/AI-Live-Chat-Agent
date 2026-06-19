@@ -1,7 +1,7 @@
 import {Router, type Request, type Response} from 'express';
 import { createConversation, getConversationHistory, saveMessage } from '../services/conversation.js';
 import { generateReply } from '../services/llm.js';
-
+import { config } from '../config/index.ts';
 const chatRouter = Router();
 
 chatRouter.post('/message', async (req:Request, res:Response): Promise<void> =>{
@@ -9,6 +9,11 @@ chatRouter.post('/message', async (req:Request, res:Response): Promise<void> =>{
         const { message, sessionId } = req.body;
         if(!message || typeof message !== 'string'){
              res.status(400).json({error: 'Message is required, it cannot be empty'});
+             return;
+        }
+
+            if (message.length > config.MAX_MESSAGE_LENGTH) {
+             res.status(400).json({ error: `Message too long. Max ${config.MAX_MESSAGE_LENGTH} characters.` });
              return;
         }
 

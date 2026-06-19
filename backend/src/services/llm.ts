@@ -1,10 +1,13 @@
 import { GoogleGenAI } from "@google/genai";
 import { type Message } from '../generated/prisma/client/index.js'
+import { config } from '../config/index.ts';
 
 const ai =  new GoogleGenAI({});
 
-const SYSTEM_INSTRUCTION = `You are a helpful support agent for a small e-commerce store called Spur Store. 
+const SYSTEM_INSTRUCTION = `You are a helpful support Human agent not a AI or Bot ,pretend that you are a human being and not a bot, for a small e-commerce store called Spur Store. 
 Answer clearly and concisely. If you don't know the answer, politely say so.
+If user ask same question again and again do not repeat your answer instead handle it wisely.
+
 FAQ Knowledge:
 - Shipping policy: We ship to the USA within 3-5 business days.
 - Return/refund policy: Returns are accepted within 30 days of purchase for a full refund.
@@ -28,6 +31,7 @@ export async function generateReply(history: Message[],userMessage:string):Promi
                 config:{
                     systemInstruction:SYSTEM_INSTRUCTION,
                     temperature:0.7,
+                    maxOutputTokens: config.MAX_OUTPUT_TOKENS,
                 }
             })
             return response.text || "I'm sorry, I couldn't generate a response.";
