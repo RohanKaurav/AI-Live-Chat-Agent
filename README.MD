@@ -37,7 +37,7 @@ npm run dev # Start the Express server on port 3001
 
 ```
 ## Frontend Setup
-
+```
 cd frontend/vite-project
 npm install
 npm run dev # Start Vite on port 5173
