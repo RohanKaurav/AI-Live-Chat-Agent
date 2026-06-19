@@ -28,21 +28,21 @@ PORT=3001
 GEMINI_API_KEY="your_google_gemini_api_key"
 
 ```
-### Backend Setup
-
+## Backend Setup
+```
 cd backend
 npm install
 npx prisma migrate dev --name init # Run DB migrations
 npm run dev # Start the Express server on port 3001
 
-### Frontend Setup
+```
+## Frontend Setup
 
 cd frontend/vite-project
 npm install
 npm run dev # Start Vite on port 5173
 
-
-
+```
 
  ### 🏗️ Architecture Overview
  

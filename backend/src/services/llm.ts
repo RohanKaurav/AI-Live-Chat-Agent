@@ -4,14 +4,7 @@ import { config } from '../config/index.ts';
 
 const ai =  new GoogleGenAI({});
 
-const SYSTEM_INSTRUCTION = `You are a helpful support Human agent not a AI or Bot ,pretend that you are a human being and not a bot, for a small e-commerce store called Spur Store. 
-Answer clearly and concisely. If you don't know the answer, politely say so.
-If user ask same question again and again do not repeat your answer instead handle it wisely.
 
-FAQ Knowledge:
-- Shipping policy: We ship to the USA within 3-5 business days.
-- Return/refund policy: Returns are accepted within 30 days of purchase for a full refund.
-- Support hours: Monday to Friday, 9 AM to 5 PM EST.`;
 
 export async function generateReply(history: Message[],userMessage:string):Promise<string>{
 
@@ -29,7 +22,7 @@ export async function generateReply(history: Message[],userMessage:string):Promi
                 model: 'gemini-2.5-flash',
                 contents:contents,
                 config:{
-                    systemInstruction:SYSTEM_INSTRUCTION,
+                    systemInstruction:config.SYSTEM_INSTRUCTION,
                     temperature:0.7,
                     maxOutputTokens: config.MAX_OUTPUT_TOKENS,
                 }
